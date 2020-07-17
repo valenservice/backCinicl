@@ -10,7 +10,7 @@ const getUsuarios = async(req, res , next) => {
 
     await Usuario.find({ }, (err, usuarios) => {
 
-        console.log('usuarios', usuarios)
+        //console.log('usuarios', usuarios)
 
         if( err ){
             return res.status(500).json({
@@ -22,7 +22,8 @@ const getUsuarios = async(req, res , next) => {
 
         res.status(200).json({
             ok: true,
-            usuarios
+            usuarios,
+            id: req.id
         });
     
     });
