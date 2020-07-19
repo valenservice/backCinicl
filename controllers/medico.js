@@ -19,13 +19,13 @@ const postMedicos = async(req, res = response) => {
     // console.log(req.body);
     // const {nombre} = req.body;    
 
-    const id = req.id;
+    const uid = req.id;
     const medico = new Medico({
-        usuario: id,
+        usuario: uid,
         ...req.body
     });
 
-    console.log(id)
+    console.log(uid)
 
     try {
 
@@ -50,36 +50,27 @@ const postMedicos = async(req, res = response) => {
 }
 
 const putMedicos = async (req, res = response) => {
-
-    //TOTO: Validar token y comprobar si es el usuario correcto
     
-    const id = req.params.id;
+    const id = req.params.id
+    const uid = req.id;
 
     try {
 
-        const medicoDB = await Medico.findById(id);
-        if(!medicoDB){
+        const medico = await Medico.findById(id);
+
+        if(!medico){
             return res.status(404).json({
                 ok: false,
                 msg: 'No existe un medico'
             })
         }
 
-         // Actualizaciones    
-        //const {password, google, email, ...campos} = req.body;
-
-        // if(usuarioDB.email != email){
-        //     const existeEmail = await Usuario.findOne({email});
-        //     if( existeEmail){
-        //         return res.status(400).json({
-        //             ok: false,
-        //             msg: 'Existe correo con ese id'
-        //         })
-        //     }
-        // }
-
-        //campos.email = email;
-        const medicoActualizado = await Medico.findByIdAndUpdate(id, campos,{new: true});
+        const cambiosMedico = {
+            ...req.body,
+            usuario: uid,
+        }
+        
+        const medicoActualizado = await Medico.findByIdAndUpdate(id, cambiosMedico, {new: true});
 
         res.json({
             ok: true,

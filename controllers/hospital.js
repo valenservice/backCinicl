@@ -21,7 +21,7 @@ const postHospitales = async(req, res = response) => {
         ...req.body
     });
 
-    console.log(uid)
+    console.log('UID1: ', id)
 
     try {
 
@@ -43,39 +43,32 @@ const postHospitales = async(req, res = response) => {
 }
 
 const putHospitales = async (req, res = response) => {
-
-    //TOTO: Validar token y comprobar si es el usuario correcto
     
     const id = req.params.id;
+    const uid = req.id;
+
+    console.log('UID2: ', uid)
 
     try {
 
-        const hospitalDB = await Hospital.findById(id);
-        if(!hospitalDB){
+        const hospital = await Hospital.findById(id);   
+
+        if(!hospital){
             return res.status(404).json({
                 ok: false,
                 msg: 'No existe un hospital'
             })
         }
 
-         // Actualizaciones    
-        //const {password, google, email, ...campos} = req.body;
-
-        // if(usuarioDB.email != email){
-        //     const existeEmail = await Usuario.findOne({email});
-        //     if( existeEmail){
-        //         return res.status(400).json({
-        //             ok: false,
-        //             msg: 'Existe correo con ese id'
-        //         })
-        //     }
-        // }
-
-        //campos.email = email;
-        const hospitalActualizado = await Hospital.findByIdAndUpdate(id, campos,{new: true});
+        const cambiosHospital = {
+            ...req.body,
+            usuario: uid
+        }
+        const hospitalActualizado = await Hospital.findByIdAndUpdate(id, cambiosHospital, {new: true});
 
         res.json({
             ok: true,
+            msg: 'Hospital Actualizado',
             hospital: hospitalActualizado
         })
         
@@ -107,7 +100,7 @@ const deleteHospitales = async (req, res = response) => {
 
         res.json({
             ok: true,
-            msg: 'Usuario Eliminado'
+            msg: 'Hospital Eliminado'
         })
         
     } catch (error) {
