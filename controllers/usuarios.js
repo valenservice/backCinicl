@@ -7,25 +7,19 @@ const Usuario = require('../models/usuario');
 const getUsuarios = async(req, res , next) => {
 
     //const usuarios = await Usuario.find({}, 'nombre');
-
-    await Usuario.find({ }, (err, usuarios) => {
-
-        //console.log('usuarios', usuarios)
-
-        if( err ){
-            return res.status(500).json({
-                ok: false,
-                mensaje: 'Error cargando usuario',
-                errors: err
-            });
-        }
-
-        res.status(200).json({
-            ok: true,
-            usuarios,
-            id: req.id
-        });
+    const desde = Number(req.query.desde) || 0;
     
+    const [usuarios, total] = await Promise.all([
+        Usuario.find()
+               .skip( desde )
+               .limit( 2 ),
+        Usuario.count()    
+    ]);
+    
+    res.status(200).json({
+        ok: true,
+        usuarios,
+        total
     });
 
 }

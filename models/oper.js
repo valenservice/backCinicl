@@ -6,4 +6,4 @@ var operSchema = new Schema({
     formatoIn: { type: String, required: [true, 'El formato In es necesario']  }
 });
 
-module.exports = mongoose.model('oper', operSchema);
+module.exports = mongoose.model('operpe', operSchema);

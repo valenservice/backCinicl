@@ -15,11 +15,17 @@ app.use(express.json());
 dbConnection();
 // Rutas
 app.use('/api/usuarios', require('./routes/usuarios'));
+app.use('/api/hospitales', require('./routes/hospital'));
+app.use('/api/medicos', require('./routes/medico'));
+app.use('/api/todo', require('./routes/busqueda'));
+app.use('/api/uploads', require('./routes/upload'));
 app.use('/api/login', require('./routes/auth'));
 app.use('/', require('./routes/app'));
+
 app.use('/tf/textfield', require('./routes/bschtextfield'));
 app.use('/tf/label', require('./routes/bschlabel'));
 app.use('/tf/oper', require('./routes/oper'));
+app.use('/tf/formato', require('./routes/formato'));
 
 // Escuchar Peticiones
 app.listen(process.env, () => {

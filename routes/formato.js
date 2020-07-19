@@ -1,23 +1,23 @@
 var express = require('express');
 var app = express();
 
-var Oper = require('../models/oper');
+var Formato = require('../models/formato');
 
 app.get('/', (req, res, next) => {    
 
-    Oper.find({ }, (err, operpes) => {
-        console.log('operpes', operpes)
+    Formato.find({ }, (err, formatoinpes) => {
+        console.log('formatoinpes', formatoinpes)
         if( err ){
             return res.status(500).json({
                 ok: false,
-                mensaje: 'Error cargando Oper',
+                mensaje: 'Error cargando Formato',
                 errors: err
             });
         }
 
         res.status(200).json({
             ok: true,
-            operpes
+            formatoinpes
         });
     
     });
